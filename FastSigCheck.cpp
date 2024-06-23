@@ -25,7 +25,11 @@ std::unordered_map<LONG, std::wstring> errorMessages = {
     {TRUST_E_FINANCIAL_CRITERIA, L"The certificate does not meet or contain the Authenticode financial extensions."},
     {TRUST_E_NO_SIGNER_CERT, L"The certificate for the signer of the message is not valid or not found."},
     {TRUST_E_SYSTEM_ERROR, L"A system-level error occurred while verifying trust."},
-    {TRUST_E_TIME_STAMP, L"The time stamp signature or certificate could not be verified or is malformed."}
+    {TRUST_E_TIME_STAMP, L"The time stamp signature or certificate could not be verified or is malformed."},
+    {TRUST_E_SUBJECT_NOT_TRUSTED, L"The subject failed the specified verification action. Check the EnableCertPaddingCheck registry key for additional verification."},
+    {TRUST_E_PROVIDER_UNKNOWN, L"The trust provider is not recognized on this system."},
+    {TRUST_E_ACTION_UNKNOWN, L"The trust provider does not support the specified action."},
+    {TRUST_E_SUBJECT_FORM_UNKNOWN, L"The trust provider does not support the form specified for the subject."}
 };
 
 int VerifyFileSignature(LPCWSTR filePath, bool debug)
@@ -97,12 +101,15 @@ int wmain(int argc, wchar_t* argv[])
 
     switch (result)
     {
+    // Valid Signature Case
     case ERROR_SUCCESS:
         std::wcout << L"The file is signed and the signature is valid." << std::endl;
         return 0;
+    // No Signature Case
     case TRUST_E_NOSIGNATURE:
         std::wcout << L"The file is not signed." << std::endl;
         return 1;
+    // Invalid signature cases
     case TRUST_E_BAD_DIGEST:
     case CERT_E_CHAINING:
     case CERT_E_CRITICAL:
@@ -121,8 +128,15 @@ int wmain(int argc, wchar_t* argv[])
     case TRUST_E_NO_SIGNER_CERT:
     case TRUST_E_SYSTEM_ERROR:
     case TRUST_E_TIME_STAMP:
+    case TRUST_E_SUBJECT_NOT_TRUSTED:
         std::wcout << errorMessages[result] << std::endl;
         return 2;
+    // Unsupported error cases
+    case TRUST_E_PROVIDER_UNKNOWN:
+    case TRUST_E_ACTION_UNKNOWN:
+    case TRUST_E_SUBJECT_FORM_UNKNOWN:
+		std::wcout << L"An error occurred: " << errorMessages[result] << std::endl;
+		return 3;
     default:
         std::wcout << L"An error occurred: " << std::hex << result << std::endl;
         return -1;
