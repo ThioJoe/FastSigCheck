@@ -75,6 +75,7 @@ int wmain(int argc, wchar_t* argv[])
         std::wcout << L"The file is not signed." << std::endl;
         return 1;
     case TRUST_E_BAD_DIGEST:
+    case CERT_E_CHAINING:
         std::wcout << L"The file's signature is invalid." << std::endl;
         return 2;
     default:
