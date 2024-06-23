@@ -5,7 +5,7 @@
 
 #pragma comment(lib, "wintrust.lib")
 
-int VerifyFileSignature(LPCWSTR filePath)
+int VerifyFileSignature(LPCWSTR filePath, bool debug)
 {
     WINTRUST_FILE_INFO fileData = { 0 };
     fileData.cbStruct = sizeof(WINTRUST_FILE_INFO);
@@ -28,38 +28,43 @@ int VerifyFileSignature(LPCWSTR filePath)
     winTrustData.pwszURLReference = NULL;
     winTrustData.dwProvFlags = WTD_CACHE_ONLY_URL_RETRIEVAL;
 
-    #ifdef _DEBUG
-    std::wcout << L"Running WinVerifyTrust on file: " << filePath << std::endl;
-    #endif
+    if (debug)
+    {
+        std::wcout << L"Running WinVerifyTrust on file: " << filePath << std::endl;
+    }
 
     LONG status = WinVerifyTrust(NULL, &policyGUID, &winTrustData);
 
-    #ifdef _DEBUG
-    std::wcout << L"WinVerifyTrust returned: " << std::hex << status << std::endl;
-    #endif
+    if (debug)
+    {
+        std::wcout << L"WinVerifyTrust returned: " << std::hex << status << std::endl;
+    }
 
     return status;
 }
 
 int wmain(int argc, wchar_t* argv[])
 {
-    if (argc != 2)
+    if (argc < 2 || argc > 3)
     {
-        std::wcerr << L"Usage: VerifySignature.exe <file-path>" << std::endl;
+        std::wcerr << L"Usage: VerifySignature.exe <file-path> [--debug]" << std::endl;
         return -1;
     }
 
     LPCWSTR filePath = argv[1];
+    bool debug = (argc == 3 && wcscmp(argv[2], L"--debug") == 0);
 
-    #ifdef _DEBUG
-    std::wcout << L"Received file path: " << filePath << std::endl;
-    #endif
+    if (debug)
+    {
+        std::wcout << L"Received file path: " << filePath << std::endl;
+    }
 
-    int result = VerifyFileSignature(filePath);
+    int result = VerifyFileSignature(filePath, debug);
 
-    #ifdef _DEBUG
-    std::wcout << L"VerifyFileSignature result: " << result << std::endl;
-    #endif
+    if (debug)
+    {
+        std::wcout << L"VerifyFileSignature result: " << result << std::endl;
+    }
 
     switch (result)
     {
