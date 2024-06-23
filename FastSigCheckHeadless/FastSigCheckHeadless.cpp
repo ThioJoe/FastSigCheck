@@ -47,13 +47,39 @@ int wmain(int argc, wchar_t* argv[])
     // Map the result to an appropriate exit code
     switch (result)
     {
+    // Valid Signature Case
     case ERROR_SUCCESS:
-        return 0; // Signature is valid
+        return 0;
+    // No Signature Case
     case TRUST_E_NOSIGNATURE:
-        return 2; // No signature is present
+        return 1;
+    // Invalid signature cases
     case TRUST_E_BAD_DIGEST:
-        return 3; // Signature is invalid
+    case CERT_E_CHAINING:
+    case CERT_E_CRITICAL:
+    case CERT_E_INVALID_NAME:
+    case CERT_E_INVALID_POLICY:
+    case CERT_E_ISSUERCHAINING:
+    case CERT_E_MALFORMED:
+    case CERT_E_PATHLENCONST:
+    case CERT_E_UNTRUSTEDCA:
+    case CRYPT_E_NO_REVOCATION_CHECK:
+    case TRUST_E_BASIC_CONSTRAINTS:
+    case TRUST_E_CERT_SIGNATURE:
+    case TRUST_E_COUNTER_SIGNER:
+    case TRUST_E_EXPLICIT_DISTRUST:
+    case TRUST_E_FINANCIAL_CRITERIA:
+    case TRUST_E_NO_SIGNER_CERT:
+    case TRUST_E_SYSTEM_ERROR:
+    case TRUST_E_TIME_STAMP:
+    case TRUST_E_SUBJECT_NOT_TRUSTED:
+        return 2;
+    // Unsupported error cases
+    case TRUST_E_PROVIDER_UNKNOWN:
+    case TRUST_E_ACTION_UNKNOWN:
+    case TRUST_E_SUBJECT_FORM_UNKNOWN:
+        return 3;
     default:
-        return 4; // Some other error occurred
+        return -1;
     }
 }
