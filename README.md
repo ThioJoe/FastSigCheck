@@ -16,7 +16,12 @@ FastSigCheck.exe <file-path> [--debug]
 ```
 
 
-### Speed Comparison Table
+### Speed Comparison
+
+FastSigCheck demonstrates significant performance improvements over both Signtool and Sigcheck in all tested scenarios. This makes it a more efficient choice for signature verification tasks, particularly for unsigned files.
+
+Below are some benchmarking results using the "Hyperfine" command line benchmarking tool.
+
 <table border="1" cellpadding="5" cellspacing="0">
     <thead>
         <tr>
@@ -96,13 +101,10 @@ hyperfine "sigcheck64.exe -nobanner BadSignature.cat" -i --warmup 10
 </details>
 
 
-## Conclusion
-
-FastSigCheck demonstrates significant performance improvements over both Signtool and Sigcheck in all tested scenarios. This makes it a more efficient choice for signature verification tasks, particularly for unsigned files.
-
-
 ## Limitations:
 - Does not work with catalog signatures
 
 # Other Notes:
 - The "Headless" Version: This version returns results only as an exit code with no option for string outputs of any kind, in case maximum efficiency is required. Though I haven't found it to really be any faster, but have included it anyway just in case.
+
+
