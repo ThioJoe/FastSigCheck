@@ -119,3 +119,4 @@ hyperfine "sigcheck64.exe -nobanner BadSignature.cat" -i --warmup 10
 - If you get an error (Exit code -1), it's possible there is a result code I missed.
 - You can also try running the tool with the `--debug` argument for a bit more information.
 - Feel free to leave an [issue](https://github.com/ThioJoe/FastSigCheck/issues) with the result's error code so I can add it
+- See [this page](https://github.com/ThioJoe/FastSigCheck/wiki/Result-Code-Sources) on the wiki for more info about result code sources
