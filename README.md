@@ -2,6 +2,8 @@
 
 FastSigCheck is a console application that verifies the embedded digital signature of a file in Windows as efficiently as possible. It returns basic result types via exit codes so no parsing is required, making it suitable for integration with other programs that can't handle return data.
 
+It works by querying the Windows API which handles all the checking natively (specifically using the [WinVerifyTrust](https://learn.microsoft.com/en-us/windows/win32/api/wintrust/nf-wintrust-winverifytrust) function).
+
 ## Results / Exit Codes
 - `0`: The file is signed and the signature is valid.
 - `1`: The file is not signed.
