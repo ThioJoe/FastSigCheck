@@ -1,3 +1,7 @@
+// Version: 1.0.1
+// Date: 6/23/2024
+// Author: ThioJoe
+
 #include <windows.h>
 #include <wintrust.h>
 #include <softpub.h>
@@ -29,7 +33,18 @@ std::unordered_map<LONG, std::wstring> errorMessages = {
     {TRUST_E_SUBJECT_NOT_TRUSTED, L"The subject failed the specified verification action. Check the EnableCertPaddingCheck registry key for additional verification."},
     {TRUST_E_PROVIDER_UNKNOWN, L"The trust provider is not recognized on this system."},
     {TRUST_E_ACTION_UNKNOWN, L"The trust provider does not support the specified action."},
-    {TRUST_E_SUBJECT_FORM_UNKNOWN, L"The trust provider does not support the form specified for the subject."}
+    {TRUST_E_SUBJECT_FORM_UNKNOWN, L"The trust provider does not support the form specified for the subject."},
+    {CRYPT_E_REVOKED, L"The certificate or signature has been revoked."},
+    {CERT_E_UNTRUSTEDROOT, L"A certification chain processed correctly but terminated in a root certificate that is not trusted by the trust provider."},
+    {CERT_E_UNTRUSTEDTESTROOT, L"The root certificate is a testing certificate and policy settings disallow test certificates."},
+    {CERT_E_WRONG_USAGE, L"The certificate is not valid for the requested usage."},
+    {CERT_E_EXPIRED, L"A required certificate is not within its validity period."},
+    {CRYPT_E_REVOCATION_OFFLINE, L"The revocation function was unable to check revocation because the revocation server was offline."},
+    {CERT_E_VALIDITYPERIODNESTING, L"The validity periods of the certification chain do not nest correctly."},
+    {CERT_E_PURPOSE, L"The certificate is being used for a purpose other than one specified by the issuing CA."},
+    {CERT_E_REVOCATION_FAILURE, L"The revocation process could not continue and the certificate could not be checked."},
+    {CERT_E_CN_NO_MATCH, L"The certificate's CN name does not match the passed value."},
+    {CERT_E_ROLE, L"A certificate that can only be used as an end-entity is being used as a CA or vice versa."}
 };
 
 int VerifyFileSignature(LPCWSTR filePath, bool debug)
@@ -136,14 +151,25 @@ int wmain(int argc, wchar_t* argv[])
     case TRUST_E_SYSTEM_ERROR:
     case TRUST_E_TIME_STAMP:
     case TRUST_E_SUBJECT_NOT_TRUSTED:
+    case CRYPT_E_REVOKED:
+    case CERT_E_UNTRUSTEDROOT:
+    case CERT_E_UNTRUSTEDTESTROOT:
+    case CERT_E_WRONG_USAGE:
+    case CERT_E_EXPIRED:
+    case CRYPT_E_REVOCATION_OFFLINE:
+    case CERT_E_VALIDITYPERIODNESTING:
+    case CERT_E_PURPOSE:
+    case CERT_E_REVOCATION_FAILURE:
+    case CERT_E_CN_NO_MATCH:
+    case CERT_E_ROLE:
         std::wcout << errorMessages[result] << std::endl;
         return 2;
     // Unsupported error cases
     case TRUST_E_PROVIDER_UNKNOWN:
     case TRUST_E_ACTION_UNKNOWN:
     case TRUST_E_SUBJECT_FORM_UNKNOWN:
-		std::wcout << L"An error occurred: " << errorMessages[result] << std::endl;
-		return 3;
+        std::wcout << L"An error occurred: " << errorMessages[result] << std::endl;
+        return 3;
     default:
         std::wcout << L"An error occurred: " << std::hex << result << std::endl;
         return -1;

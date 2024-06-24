@@ -1,4 +1,4 @@
-// Version: 1.0.0
+// Version: 1.0.1
 // Date: 6/23/2024
 // Author: ThioJoe
 
@@ -77,6 +77,17 @@ int wmain(int argc, wchar_t* argv[])
     case TRUST_E_SYSTEM_ERROR:
     case TRUST_E_TIME_STAMP:
     case TRUST_E_SUBJECT_NOT_TRUSTED:
+    case CRYPT_E_REVOKED:
+    case CERT_E_UNTRUSTEDROOT:
+    case CERT_E_UNTRUSTEDTESTROOT:
+    case CERT_E_WRONG_USAGE:
+    case CERT_E_EXPIRED:
+    case CRYPT_E_REVOCATION_OFFLINE:
+    case CERT_E_VALIDITYPERIODNESTING:
+    case CERT_E_PURPOSE:
+    case CERT_E_REVOCATION_FAILURE:
+    case CERT_E_CN_NO_MATCH:
+    case CERT_E_ROLE:
         return 2;
     // Unsupported error cases
     case TRUST_E_PROVIDER_UNKNOWN:
