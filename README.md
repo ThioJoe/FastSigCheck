@@ -112,3 +112,8 @@ hyperfine "sigcheck64.exe -nobanner BadSignature.cat" -i --warmup 10
 - The actual source code for each version of the tool is just 1 file each, the rest are project files.
    - `FastSigCheck.exe`: https://github.com/ThioJoe/FastSigCheck/blob/master/FastSigCheck.cpp
    - `FastSigCheckHeadless.exe`: https://github.com/ThioJoe/FastSigCheck/blob/master/FastSigCheckHeadless/FastSigCheckHeadless.cpp
+
+# Receiving an Error?
+- If you get an error (Exit code -1), it's possible there is a result code I missed.
+- You can also try running the tool with the `--debug` argument for a bit more information.
+- Feel free to leave an [issue](https://github.com/ThioJoe/FastSigCheck/issues) with the result's error code so I can add it
