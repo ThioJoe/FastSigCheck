@@ -6,7 +6,7 @@ FastSigCheck is a console application that verifies the embedded digital signatu
 - `0`: The file is signed and the signature is valid.
 - `1`: The file is not signed.
 - `2`: The file's signature is invalid or other signature-related errors occurred.
-- `3`: An unsupported error occurred during the verification process.
+- `3`: A result signifying the file type or signature is not supported by the API in some way.
 - `-1`: Usage error or unexpected system-level error.
 
 ## Usage
