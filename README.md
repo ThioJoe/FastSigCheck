@@ -107,4 +107,8 @@ hyperfine "sigcheck64.exe -nobanner BadSignature.cat" -i --warmup 10
 # Other Notes:
 - The "Headless" Version: This version returns results only as an exit code with no option for string outputs of any kind, in case maximum efficiency is required. Though I haven't found it to really be any faster, but have included it anyway just in case.
 
-
+# Compiling Yourself
+- The whole visual studio solution/project is included, so you should be able to just open the .sln file and it will be ready to compile.
+- The actual source code for each version of the tool is just 1 file each, the rest are project files.
+   - `FastSigCheck.exe`: https://github.com/ThioJoe/FastSigCheck/blob/master/FastSigCheck.cpp
+   - `FastSigCheckHeadless.exe`: https://github.com/ThioJoe/FastSigCheck/blob/master/FastSigCheckHeadless/FastSigCheckHeadless.cpp
