@@ -9,7 +9,7 @@ It works by querying the Windows API which handles all the checking natively (sp
 - `1`: The file is not signed.
 - `2`: The file's signature is invalid or other signature-related errors occurred.
 - `3`: A result signifying the file type or signature is not supported by the API in some way.
-- `-1`: Usage error or unexpected system-level error.
+- `-1`: A usage error or system-level error occurred, or the API returned an unknown result code. See the ["Receiving an Error?"](https://github.com/ThioJoe/FastSigCheck/tree/master?tab=readme-ov-file#receiving-an-error) section for more info.
 
 ## Usage
 
