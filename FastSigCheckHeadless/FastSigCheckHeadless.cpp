@@ -1,3 +1,7 @@
+// Version: 1.0.0
+// Date: 6/23/2024
+// Author: ThioJoe
+
 #include <windows.h>
 #include <wintrust.h>
 #include <softpub.h>
@@ -79,6 +83,7 @@ int wmain(int argc, wchar_t* argv[])
     case TRUST_E_ACTION_UNKNOWN:
     case TRUST_E_SUBJECT_FORM_UNKNOWN:
         return 3;
+    // Other error cases
     default:
         return -1;
     }
