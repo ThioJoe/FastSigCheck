@@ -80,7 +80,14 @@ int wmain(int argc, wchar_t* argv[])
 {
     if (argc < 2 || argc > 3)
     {
-        std::wcerr << L"Usage: VerifySignature.exe <file-path> [--debug]" << std::endl;
+        std::wcerr << L"Usage: VerifySignature.exe <file-path> [--debug]\n"
+            << L"Return codes:\n"
+            << L"  0: The file is signed and the signature is valid.\n"
+            << L"  1: The file is not signed.\n"
+            << L"  2: The file's signature is invalid or other signature-related errors occurred.\n"
+            << L"  3: An unsupported error occurred during the verification process.\n"
+            << L" -1: Usage error or unexpected system-level error." << std::endl;
+
         return -1;
     }
 
